@@ -1,0 +1,21 @@
+{
+  "target_uid": "YOUR_TARGET_UID",
+  "base_url": "https://example.com",
+
+  "api_paths": {
+    "api_profile": "/ajax/profile/info?uid={uid}",
+    "api_articles": "/ajax/statuses/articles?uid={uid}&page={page}&feature=10",
+    "article_page": "/article/p/show?id={article_id}"
+  },
+
+  "cookies": {
+    "YOUR_COOKIE_NAME_1": "",
+    "YOUR_COOKIE_NAME_2": "",
+    "XSRF-TOKEN": ""
+  },
+
+  "save_dir": "./output",
+  "proxy": null,
+  "delay_between_articles": 2,
+  "delay_between_pages": 1
+}
