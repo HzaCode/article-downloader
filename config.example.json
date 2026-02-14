@@ -5,7 +5,8 @@
   "api_paths": {
     "api_profile": "/ajax/profile/info?uid={uid}",
     "api_articles": "/ajax/statuses/articles?uid={uid}&page={page}&feature=10",
-    "article_page": "/article/p/show?id={article_id}"
+    "article_page": "/article/p/show?id={article_id}",
+    "qa_page": "/p/{qa_id}"
   },
 
   "cookies": {
@@ -15,6 +16,7 @@
   },
 
   "save_dir": "./output",
+  "qa_save_dir": "./qa/output",
   "proxy": null,
   "delay_between_articles": 2,
   "delay_between_pages": 1

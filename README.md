@@ -82,11 +82,19 @@ output/
 │   └── ...
 ```
 
+## Q&A Downloader
+
+The `qa/` directory contains scripts for downloading paid Q&A content. See [qa/README.md](qa/README.md) for details.
+
+- `qa/qa_downloader.py` — requests-based, for already-accessible Q&A
+- `qa/qa_unlock.py` — Playwright-based, for paywalled Q&A requiring browser interaction
+
 ## Notes
 
 - Cookies expire periodically — if you get HTTP 403 or login errors, refresh your cookies from the browser
 - The tool respects rate limits with configurable delays between requests
 - Already downloaded articles are skipped automatically on re-run
+- `qa_unlock.py` requires Playwright: `pip install playwright && playwright install chromium`
 
 ## License
 
