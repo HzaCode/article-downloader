@@ -50,15 +50,15 @@ def sanitize_filename(name, max_len=80):
 
 
 def is_already_good(qa_dir):
-    """Check if a Q&A already has substantial answer content."""
+    """Need unlock only when: no file, or answer part is empty or placeholder (empty). No length check."""
     txt = os.path.join(qa_dir, "qa.txt")
     if not os.path.exists(txt):
         return False
     with open(txt, "r", encoding="utf-8") as f:
         content = f.read()
     parts = content.split("=" * 60)
-    answer = parts[-1].strip() if len(parts) > 1 else ""
-    return len(answer) > 150
+    answer = (parts[-1].strip() if len(parts) > 1 else "").strip()
+    return bool(answer) and answer != "(empty)"
 
 
 async def process_one(context, config, idx, qa, qa_dir):
@@ -82,18 +82,19 @@ async def process_one(context, config, idx, qa, qa_dir):
             await btn.click()
             await asyncio.sleep(4)
 
-        # Extract answer
+        # Extract answer (take any non-empty block; no minimum length)
         answer_text = await page.evaluate("""
             () => {
-                const sels = ['.answer_con', '.answer_text',
-                    '[node-type="answer_text"]', '[node-type="answer_content"]',
-                    '.main_answer .WB_text', '.main_answer'];
+                const sels = ['.answer_con', '.answer_text', '[node-type="answer_content"]',
+                    '[node-type="answer_text"]', '.main_answer .WB_text', '.main_answer', '.WB_answer_wrap'];
                 for (const s of sels) {
                     const el = document.querySelector(s);
-                    if (el && el.innerText.trim().length > 100) return el.innerText.trim();
+                    if (el) {
+                        const t = el.innerText.trim();
+                        if (t.length > 0) return t;
+                    }
                 }
-                const wrap = document.querySelector('.WB_answer_wrap');
-                return wrap ? wrap.innerText.trim() : '';
+                return '';
             }
         """)
 

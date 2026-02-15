@@ -330,9 +330,6 @@ def main():
             answer_len = len(content.get("answer", ""))
             print(f"    answer: {answer_len} chars")
 
-            if answer_len < 150:
-                print(f"    NOTE: short answer - may need qa_unlock.py for browser unlock")
-
             save_qa(qa, content, save_dir, idx)
             success += 1
 
